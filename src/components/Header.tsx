@@ -34,7 +34,7 @@ const Header = () => {
             Dashboard
           </a>
           <a
-            href="#pricing"
+            href="/pricing"
             className="transition-smooth hover:text-accent text-muted-foreground"
           >
             Pricing
