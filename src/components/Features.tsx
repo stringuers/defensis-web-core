@@ -68,6 +68,16 @@ const Features = () => {
           </p>
         </div>
 
+        {/* Security Section */}
+        <div id="security" className="mb-16">
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold mb-4">Advanced Security Features</h3>
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              Our AI-powered security engine provides comprehensive protection across your entire development lifecycle.
+            </p>
+          </div>
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
             <Card 

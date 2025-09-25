@@ -2,11 +2,21 @@ import { Check, Shield, Zap, Users, Crown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 import Header from "@/components/Header";
+import PricingModal from "@/components/PricingModal";
+import AuthModal from "@/components/AuthModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Pricing = () => {
+  const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const { isAuthenticated } = useAuth();
+
   const plans = [
     {
+      id: "free",
       name: "Free",
       price: "0",
       period: "/month",
@@ -23,6 +33,7 @@ const Pricing = () => {
       variant: "outline" as const
     },
     {
+      id: "developer",
       name: "Developer",
       price: "29",
       period: "/month",
@@ -41,6 +52,7 @@ const Pricing = () => {
       variant: "default" as const
     },
     {
+      id: "team",
       name: "Team",
       price: "99",
       period: "/month",
@@ -60,6 +72,7 @@ const Pricing = () => {
       variant: "default" as const
     },
     {
+      id: "enterprise",
       name: "Enterprise",
       price: "299",
       period: "/month",
@@ -81,6 +94,7 @@ const Pricing = () => {
       variant: "outline" as const
     },
     {
+      id: "custom",
       name: "Custom",
       price: "Contact us",
       period: "",
@@ -100,6 +114,20 @@ const Pricing = () => {
       variant: "outline" as const
     }
   ];
+
+  const handlePlanSelect = (plan: any) => {
+    if (isAuthenticated) {
+      setSelectedPlan(plan);
+      setIsPricingModalOpen(true);
+    } else {
+      setIsAuthModalOpen(true);
+    }
+  };
+
+  const handleContactSales = () => {
+    // In a real app, this would open a contact form or redirect to a contact page
+    console.log('Contact sales clicked');
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -175,6 +203,7 @@ const Pricing = () => {
                         ? 'bg-accent hover:bg-accent/90 text-accent-foreground shadow-glow' 
                         : ''
                     }`}
+                    onClick={() => handlePlanSelect(plan)}
                   >
                     {plan.cta}
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -266,11 +295,19 @@ const Pricing = () => {
                 Start with our free plan or contact sales for a personalized demo
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Button 
+                  size="lg" 
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                  onClick={() => handlePlanSelect(plans[0])}
+                >
                   <Shield className="mr-2 h-5 w-5" />
                   Start Free Trial
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={handleContactSales}
+                >
                   <Users className="mr-2 h-5 w-5" />
                   Contact Sales
                 </Button>
@@ -279,6 +316,18 @@ const Pricing = () => {
           </Card>
         </section>
       </main>
+
+      {/* Modals */}
+      <PricingModal 
+        isOpen={isPricingModalOpen} 
+        onClose={() => setIsPricingModalOpen(false)}
+        selectedPlan={selectedPlan}
+      />
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)}
+        defaultTab="signup"
+      />
     </div>
   );
 };
