@@ -1,17 +1,18 @@
 import { Shield, Menu, Github, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center">
         {/* Logo */}
-        <div className="mr-4 flex items-center space-x-2">
+        <Link to="/" className="mr-4 flex items-center space-x-2">
           <Shield className="h-8 w-8 text-accent" />
           <span className="text-xl font-bold text-foreground">
             Defen<span className="text-accent">Sys</span>
           </span>
-        </div>
+        </Link>
 
         {/* Navigation */}
         <nav className="flex items-center gap-6 text-sm lg:gap-8">
@@ -33,12 +34,12 @@ const Header = () => {
           >
             Dashboard
           </a>
-          <a
-            href="/pricing"
+          <Link
+            to="/pricing"
             className="transition-smooth hover:text-accent text-muted-foreground"
           >
             Pricing
-          </a>
+          </Link>
         </nav>
 
         {/* Right side */}
